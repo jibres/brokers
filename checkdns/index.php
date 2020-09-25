@@ -29,7 +29,81 @@ class broker
 
 		try
 		{
-			$dns_record = @dns_get_record($_REQUEST['domain'], DNS_ALL);
+			if(!isset($_REQUEST['type']))
+			{
+				$_REQUEST['type'] = null;
+			}
+
+			$dns_record = null;
+
+			switch ($_REQUEST['type'])
+			{
+
+				case 'DNS_A':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_A);
+					break;
+
+				case 'DNS_CNAME':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_CNAME);
+					break;
+
+				case 'DNS_HINFO':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_HINFO);
+					break;
+
+				case 'DNS_CAA':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_CAA);
+					break;
+
+				case 'DNS_MX':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_MX);
+					break;
+
+				case 'DNS_NS':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_NS);
+					break;
+
+				case 'DNS_PTR':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_PTR);
+					break;
+
+				case 'DNS_SOA':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_SOA);
+					break;
+
+				case 'DNS_TXT':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_TXT);
+					break;
+
+				case 'DNS_AAAA':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_AAAA);
+					break;
+
+				case 'DNS_SRV':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_SRV);
+					break;
+
+				case 'DNS_NAPTR':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_NAPTR);
+					break;
+
+				case 'DNS_A6':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_A6);
+					break;
+
+				case 'DNS_ALL':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_ALL);
+					break;
+
+				case 'DNS_ANY':
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_ANY);
+					break;
+
+				default:
+					$dns_record = @dns_get_record($_REQUEST['domain'], DNS_NS);
+					break;
+			}
+
 			if($dns_record === false)
 			{
 				self::boboom('can not get dns record. Result is false!');
